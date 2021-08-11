@@ -28,7 +28,6 @@ const userSchema = new mongoose.Schema({
   documents: [
     {
       type: mongoose.Types.ObjectId,
-      required: [true, 'Community is required'],
       ref: 'documents',
     },
   ],

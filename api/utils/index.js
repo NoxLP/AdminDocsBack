@@ -13,7 +13,7 @@ function authUser(req, res, next) {
 
       UserModel.findOne({ email: token.email })
         .then((user) => {
-          res.locals.user = { name: user.name, email: user.email } // role tambien por ejemplo
+          res.locals.user = user // role tambien por ejemplo
           next()
         })
         .catch((err) => res.status(404).send('user not found'))

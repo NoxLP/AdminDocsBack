@@ -6,16 +6,14 @@ const { handleError } = require('../utils')
 
 exports.signUp = async (req, res) => {
   const encryptedPwd = bcrypt.hashSync(req.body.password, 10)
-  console.log('signup: ' + req.body)
+  console.log('signup: ' + JSON.stringify(req.body, null, 4))
 
   try {
-    const comm = CommunitiesModel.findById(req.body.communityId)
-
     await UserModel.create({
       name: req.body.name,
       email: req.body.email,
       password: encryptedPwd,
-      community: comm._id,
+      community: req.body.community,
     })
 
     const data = { email: user.email, name: user.name }

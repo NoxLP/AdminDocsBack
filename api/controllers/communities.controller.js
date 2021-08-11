@@ -1,7 +1,7 @@
 const DocumentsModel = require('../models/document.model')
 const { handleError } = require('../utils')
 
-exports.getAllDocuments = async (req, res) => {
+exports.getMyCommunityDocuments = async (req, res) => {
   try {
     const { user } = res.locals
     const documents = await DocumentsModel.find({ community: user.community })

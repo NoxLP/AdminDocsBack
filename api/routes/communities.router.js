@@ -1,7 +1,9 @@
 const router = require('express').Router()
 
-const { getAllDocuments } = require('../controllers/communities.controller')
+const {
+  getMyCommunityDocuments,
+} = require('../controllers/communities.controller')
 
-router.get('/', getAllDocuments)
+router.get('/docs', getMyCommunityDocuments)
 
 module.exports = router

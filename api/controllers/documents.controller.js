@@ -3,21 +3,10 @@ const path = require('path')
 const DocumentsModel = require('../models/document.model')
 const { handleError } = require('../utils')
 
-exports.getAllDocuments = async (req, res) => {
-  try {
-    const { user } = res.locals
-    user = await user.populate('documents').execPopulate()
-    console.log('All docs populated user: ' + user)
-
-    res.status(200).json(user.documents)
-  } catch (err) {
-    handleError(err, res)
-  }
-}
-
 exports.addDocument = async (req, res) => {
   try {
     const { user } = res.locals
+    console.log(user)
     let document = {
       data: fs.readFileSync(path.resolve(`uploads/${req.file.filename}`)),
       contentType: req.file.mimetype,
