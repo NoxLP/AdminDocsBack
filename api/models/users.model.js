@@ -21,6 +21,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  community: {
+    type: mongoose.Types.ObjectId,
+    required: [true, 'Community is required'],
+  },
   createdAt: {
     type: Number,
     default: Date.now(), // Get a timestamp :)
