@@ -1,5 +1,5 @@
 const UserModel = require('../models/users.model')
-const CommunitiesModel = require('../models/community.model')
+const CommunitiesModel = require('../models/communities.model')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const { handleError } = require('../utils')

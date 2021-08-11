@@ -25,10 +25,13 @@ const userSchema = new mongoose.Schema({
     type: mongoose.Types.ObjectId,
     required: [true, 'Community is required'],
   },
-  createdAt: {
-    type: Number,
-    default: Date.now(), // Get a timestamp :)
-  },
+  documents: [
+    {
+      type: mongoose.Types.ObjectId,
+      required: [true, 'Community is required'],
+      ref: 'documents',
+    },
+  ],
 })
 
 const userModel = mongoose.model('user', userSchema)

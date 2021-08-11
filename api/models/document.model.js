@@ -2,8 +2,12 @@ const mongoose = require('mongoose')
 
 const documentsSchema = new mongoose.Schema({
   data: {
-    type: String,
+    type: Buffer,
     required: [true, 'Document is requried'],
+  },
+  contentType: {
+    type: String,
+    required: [true, 'Document type is requried'],
   },
   community: {
     type: mongoose.Types.ObjectId,
@@ -20,6 +24,7 @@ const documentsSchema = new mongoose.Schema({
   category: {
     type: String,
     enum: ['Factura', 'Correspondencia', 'Aviso', 'Otros'],
+    default: 'Otros',
   },
 })
 
