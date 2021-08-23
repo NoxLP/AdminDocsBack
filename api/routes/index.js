@@ -16,7 +16,7 @@ router.get('/whoami', authUser, (req, res) => {
   res.send(`hi there! ${res.locals.user.name}`)
 })
 router.get('/status', (req, res) => {
-  res.send(`I'm here and OK! ${res.locals.user.name}`)
+  res.send(`I'm here and OK!`)
 })
 
 module.exports = router
