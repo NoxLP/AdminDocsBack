@@ -16,7 +16,7 @@ exports.signUp = async (req, res) => {
       community: req.body.community,
     })
 
-    const data = { email: user.email, name: user.name }
+    const data = { email: user.email, name: user.name, id: user._id }
     const token = jwt.sign(data, process.env.SECRET, { expiresIn: '24h' })
 
     res.status(200).json({ token: token, ...data })
