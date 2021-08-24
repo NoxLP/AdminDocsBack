@@ -26,6 +26,14 @@ const documentsSchema = new mongoose.Schema({
     enum: ['Factura', 'Correspondencia', 'Aviso', 'Otros'],
     default: 'Otros',
   },
+  name: {
+    type: String,
+    required: [true, 'Name is required'],
+  },
+  comments: {
+    type: String,
+    required: [true, 'Comments is required'],
+  },
 })
 
 const documentsModel = mongoose.model('documents', documentsSchema)
