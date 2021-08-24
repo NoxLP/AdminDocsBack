@@ -14,7 +14,9 @@ exports.addDocument = async (req, res) => {
       user: user._id,
       date: new Date(Date.now()),
     }
-    if (req.body.category) document.category = req.body.category
+    document.category = req.body.category ?? 'Otros'
+    document.name = req.body.name ?? req.file.filename
+    document.comments = req.body.comments ?? ''
 
     document = await DocumentsModel.create(document)
 
