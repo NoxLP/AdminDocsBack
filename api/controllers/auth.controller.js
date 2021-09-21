@@ -32,15 +32,18 @@ exports.signUp = async (req, res) => {
 }
 
 exports.login = (req, res) => {
+  console.log('>>> LOGIN')
   UserModel.findOne({ mobile_number: req.body.mobile })
     .then((user) => {
       if (!user)
         return res.status(400).json({ error: 'wrong password or email' })
+      console.log('>>> user found')
 
       bcrypt.compare(req.body.password, user.password, (err, result) => {
         if (!result) {
           return res.status(500).json({ error: 'wrong password or email' })
         }
+        console.log('>>> pwd correct')
 
         const user_data = {
           mobile_number: req.body.mobile,
