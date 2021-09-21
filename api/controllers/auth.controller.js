@@ -12,11 +12,17 @@ exports.signUp = async (req, res) => {
     await UserModel.create({
       name: req.body.name,
       email: req.body.email,
+      mobile_number: req.body.mobile,
       password: encryptedPwd,
       community: req.body.community,
     })
 
-    const data = { email: user.email, name: user.name, id: user._id }
+    const data = {
+      mobile_number: req.body.mobile,
+      email: user.email,
+      name: user.name,
+      id: user._id,
+    }
     const token = jwt.sign(data, process.env.SECRET, { expiresIn: '24h' })
 
     res.status(200).json({ token: token, ...data })
@@ -26,7 +32,7 @@ exports.signUp = async (req, res) => {
 }
 
 exports.login = (req, res) => {
-  UserModel.findOne({ email: req.body.email })
+  UserModel.findOne({ mobile_number: req.body.mobile })
     .then((user) => {
       if (!user)
         return res.status(400).json({ error: 'wrong password or email' })
@@ -36,7 +42,12 @@ exports.login = (req, res) => {
           return res.status(500).json({ error: 'wrong password or email' })
         }
 
-        const user_data = { username: req.body.name, email: req.body.email }
+        const user_data = {
+          mobile_number: req.body.mobile,
+          email: user.email,
+          name: user.name,
+          id: user._id,
+        }
         const token = jwt.sign(user_data, process.env.SECRET, {
           expiresIn: '24h',
         })

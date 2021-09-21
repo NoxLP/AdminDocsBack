@@ -17,6 +17,15 @@ const userSchema = new mongoose.Schema({
     },
     unique: [true, 'This is email is registered'],
   },
+  mobile_number: {
+    type: String,
+    required: [true, 'Mobile_number is required'],
+    validate: {
+      validator(value) {
+        return /^\d{8,12}$/.test(value)
+      },
+    },
+  },
   password: {
     type: String,
     required: true,
