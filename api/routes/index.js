@@ -1,6 +1,6 @@
 const router = require('express').Router()
 
-const { authUser } = require('../utils') // Authenticated Route
+const { checkToken } = require('../utils/auth') // Authenticated Route
 const usersRouter = require('./users.router')
 const authRouter = require('./auth.router')
 const communitiesRouter = require('./communities.router')
@@ -9,10 +9,10 @@ const documentsRouter = require('./documents.router')
 router
   .use('/users', usersRouter)
   .use('/auth', authRouter)
-  .use('/communities', authUser, communitiesRouter)
-  .use('/documents', authUser, documentsRouter)
+  .use('/communities', checkToken, communitiesRouter)
+  .use('/documents', checkToken, documentsRouter)
 
-router.get('/whoami', authUser, (req, res) => {
+router.get('/whoami', checkToken, (req, res) => {
   res.send(`hi there! ${res.locals.user.name}`)
 })
 router.get('/status', (req, res) => {

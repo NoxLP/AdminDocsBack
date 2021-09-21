@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { authUser } = require('../utils') // Authenticated Route
+const { checkToken } = require('../utils/auth') // Authenticated Route
 
 const {
   getAllUsers,
@@ -9,8 +9,8 @@ const {
   getAllUserDocuments,
 } = require('../controllers/users.controller')
 
-router.get('/', authUser, getAllUsers)
-router.get('/docs', authUser, getAllUserDocuments)
+router.get('/', checkToken, getAllUsers)
+router.get('/docs', checkToken, getAllUserDocuments)
 router.get('/:id', getUserById)
 
 router.delete('/:id', deleteUserById)
