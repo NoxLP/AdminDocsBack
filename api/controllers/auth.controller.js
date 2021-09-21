@@ -1,15 +1,14 @@
 const UserModel = require('../models/users.model')
 const CommunitiesModel = require('../models/communities.model')
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
-const { handleError } = require('../utils')
+const { compareSync, hashSync } = require('bcrypt')
+const { createToken } = require('../utils/auth')
+const { handleError } = require('../utils/index')
 
 exports.signUp = async (req, res) => {
-  const encryptedPwd = bcrypt.hashSync(req.body.password, 10)
-  console.log('signup: ' + JSON.stringify(req.body, null, 4))
-
   try {
-    await UserModel.create({
+    const encryptedPwd = hashSync(req.body.password, 10)
+
+    const user = await UserModel.create({
       name: req.body.name,
       email: req.body.email,
       mobile_number: req.body.mobile,
@@ -17,46 +16,33 @@ exports.signUp = async (req, res) => {
       community: req.body.community,
     })
 
-    const data = {
-      mobile_number: req.body.mobile,
-      email: user.email,
-      name: user.name,
-      id: user._id,
-    }
-    const token = jwt.sign(data, process.env.SECRET, { expiresIn: '24h' })
-
-    res.status(200).json({ token: token, ...data })
+    return res.status(200).json({ token: createToken(user) })
   } catch (err) {
-    res.status(500).json(err)
+    if (err.code === 11000) return handleError(400, 'User already in use', res)
+
+    return handleError(500, err, res)
   }
 }
 
-exports.login = (req, res) => {
-  console.log('>>> LOGIN')
-  UserModel.findOne({ mobile_number: req.body.mobile })
-    .then((user) => {
-      if (!user)
-        return res.status(400).json({ error: 'wrong password or email' })
-      console.log('>>> user found')
+exports.login = async (req, res, next) => {
+  try {
+    const user = await UserModel.findOne({ mobile_number: req.body.mobile })
+    if (!user) return handleError(400, 'wrong phone number', res)
 
-      bcrypt.compare(req.body.password, user.password, (err, result) => {
-        if (!result) {
-          return res.status(500).json({ error: 'wrong password or email' })
-        }
-        console.log('>>> pwd correct')
-
-        const user_data = {
+    if (user && compareSync(req.body.password, user.password)) {
+      return res.status(200).json({
+        token: createToken(user),
+        user: {
           mobile_number: req.body.mobile,
           email: user.email,
           name: user.name,
           id: user._id,
-        }
-        const token = jwt.sign(user_data, process.env.SECRET, {
-          expiresIn: '24h',
-        })
-
-        return res.status(200).json({ token: token, ...user_data })
+        },
       })
-    })
-    .catch((err) => handleError(err, res))
+    }
+
+    return handleError(403, 'wrong phone number/password', res)
+  } catch (err) {
+    return handleError(500, err, res)
+  }
 }

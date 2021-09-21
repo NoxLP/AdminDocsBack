@@ -24,6 +24,6 @@ exports.checkToken = async (req, res, next) => {
   }
 }
 
-exports.createToken = (data) => {
-  return jwt.sign(data, process.env.SECRET, { expiresIn: '24h' })
+exports.createToken = (user) => {
+  return jwt.sign({ id: user._id }, process.env.SECRET, { expiresIn: '24h' })
 }
