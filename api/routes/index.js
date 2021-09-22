@@ -7,7 +7,7 @@ const communitiesRouter = require('./communities.router')
 const documentsRouter = require('./documents.router')
 
 router
-  .use('/users', usersRouter)
+  .use('/users', checkToken, usersRouter)
   .use('/auth', authRouter)
   .use('/communities', checkToken, communitiesRouter)
   .use('/documents', checkToken, documentsRouter)
