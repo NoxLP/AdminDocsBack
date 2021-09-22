@@ -46,3 +46,18 @@ exports.login = async (req, res, next) => {
     return handleError(500, err, res)
   }
 }
+
+exports.check = async (req, res, next) => {
+  const { user } = res.locals
+  console.log(user)
+
+  res.status(200).json({
+    msg: 'Token is Valid',
+    user: {
+      mobile_number: user.mobile_number,
+      email: user.email,
+      name: user.name,
+      id: user._id,
+    },
+  })
+}
