@@ -1,6 +1,6 @@
 // Return error with details in JSON
-exports.handleError = (status, err, res) => {
+exports.handleError = (err, res, status) => {
   console.log(err)
 
-  res.status(status).json({ message: err })
+  res.status(status ?? 500).json({ message: err })
 }

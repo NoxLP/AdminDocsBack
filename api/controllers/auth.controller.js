@@ -18,9 +18,9 @@ exports.signUp = async (req, res) => {
 
     return res.status(200).json({ token: createToken(user) })
   } catch (err) {
-    if (err.code === 11000) return handleError(400, 'User already in use', res)
+    if (err.code === 11000) return handleError('User already in use', res, 400)
 
-    return handleError(500, err, res)
+    return handleError(err, res)
   }
 }
 
@@ -41,9 +41,9 @@ exports.login = async (req, res, next) => {
       })
     }
 
-    return handleError(403, 'wrong phone number/password', res)
+    return handleError('wrong phone number/password', res, 403)
   } catch (err) {
-    return handleError(500, err, res)
+    return handleError(err, res)
   }
 }
 
