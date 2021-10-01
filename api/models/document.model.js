@@ -23,8 +23,8 @@ const documentsSchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    enum: ['Factura', 'Correspondencia', 'Aviso', 'Otros'],
-    default: 'Otros',
+    enum: ['Invoice', 'Mail', 'Notice', 'Others'],
+    default: 'Others',
   },
   name: {
     type: String,
