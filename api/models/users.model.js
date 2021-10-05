@@ -42,5 +42,16 @@ const userSchema = new mongoose.Schema({
   ],
 })
 
+userSchema.methods.getProfile = function () {
+  const user = this
+  return {
+    mobile_number: user.mobile_number,
+    community: user.community,
+    email: user.email,
+    name: user.name,
+    id: user._id,
+  }
+}
+
 const userModel = mongoose.model('user', userSchema)
 module.exports = userModel

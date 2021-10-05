@@ -32,12 +32,7 @@ exports.login = async (req, res, next) => {
     if (user && compareSync(req.body.password, user.password)) {
       return res.status(200).json({
         token: createToken(user),
-        user: {
-          mobile_number: req.body.mobile,
-          email: user.email,
-          name: user.name,
-          id: user._id,
-        },
+        user: user.getProfile(),
       })
     }
 
@@ -53,11 +48,6 @@ exports.check = async (req, res, next) => {
 
   res.status(200).json({
     msg: 'Token is Valid',
-    user: {
-      mobile_number: user.mobile_number,
-      email: user.email,
-      name: user.name,
-      id: user._id,
-    },
+    user: user.getProfile(),
   })
 }
