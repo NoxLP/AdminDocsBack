@@ -7,6 +7,7 @@ exports.checkToken = async (req, res, next) => {
     return handleError('Token required in request headers', res, 400)
 
   try {
+    console.log('>> TOKEN: ' + req.headers.token)
     const jwtToken = await jwt.verify(req.headers?.token, process.env.SECRET)
     res.locals.user = await UserModel.findOne({
       mobile_number: jwtToken.mobile_number,
