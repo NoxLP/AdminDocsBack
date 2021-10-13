@@ -4,9 +4,6 @@ const { resizeImage } = require('../utils/sharp')
 
 const { addDocument } = require('../controllers/documents.controller')
 
-router.post('/', upload.single('image'), resizeImage, addDocument)
-/*router.get('/:id', getUserById)
-router.delete('/:id', deleteUserById)
-router.put('/:id', updateUser)*/
+router.post('/', resizeImage, upload.single('image'), addDocument)
 
 module.exports = router
