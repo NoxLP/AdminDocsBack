@@ -1,14 +1,15 @@
 const router = require('express').Router()
 
 const {
-  getAllUsers,
+  //getAllUsers,
   getUserById,
   deleteUserById,
   updateUser,
   getAllUserDocuments,
 } = require('../controllers/users.controller')
 
-router.get('/', getAllUsers)
+// TODO: Not used? Needs separated auth flow? Review this
+//router.get('/', getAllUsers)
 router.get('/docs', getAllUserDocuments)
 router.get('/:id', getUserById)
 

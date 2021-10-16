@@ -1,12 +1,13 @@
 const UserModel = require('../models/users.model')
 const { handleError } = require('../utils')
 
-exports.getAllUsers = (req, res) => {
+// TODO: Not used? Needs separated auth flow? Review this
+/*exports.getAllUsers = (req, res) => {
   UserModel.find()
     .then((response) => res.json(response))
     .catch((err) => handleError(err, res))
 }
-
+*/
 exports.getUserById = (req, res) => {
   UserModel.findById(req.params.id)
     .then((response) => res.json(response))
