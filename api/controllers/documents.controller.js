@@ -6,7 +6,6 @@ const { handleError } = require('../utils')
 exports.addDocument = async (req, res) => {
   try {
     const { user } = res.locals
-    console.log(user)
     let document = {
       data: fs.readFileSync(path.resolve(`uploads/${req.file.filename}`)),
       contentType: req.file.mimetype,

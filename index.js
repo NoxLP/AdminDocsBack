@@ -7,6 +7,7 @@ const cors = require('cors')
 const mongoose = require('mongoose')
 const morgan = require('morgan')
 const path = require('path')
+const helmet = require('helmet')
 
 // NONGOOSE
 mongoose.connect(
@@ -27,10 +28,12 @@ mongoose.connect(
 
 // ADDING MIDDLEWARES & ROUTER
 const app = express()
+  .use(helmet())
   .use(cors())
   .use(morgan('combined'))
   .use(express.json())
   .use(express.static(path.join(__dirname, 'public')))
+  .use(express.urlencoded({ extended: true }))
   .use('/api', require('./api/routes'))
 
 // Init server
@@ -40,7 +43,8 @@ app.listen(PORT, (err) => {
     throw new Error(err)
   }
   console.info('>'.repeat(40))
-  console.info('💻  Reboot Server Live')
+  console.info('💻  AdminDocs Server Live')
+  console.info('    (Reboot Template)')
   console.info(`📡  PORT: http://localhost:${PORT}`)
   console.info('>'.repeat(40) + '\n')
 })

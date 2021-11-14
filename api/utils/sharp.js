@@ -15,6 +15,7 @@ exports.resizeImage = async (req, res, next) => {
 
     next()
   } catch (err) {
+    console.error('\n>> ERROR: ' + err)
     return next(new createError.InternalServerError())
   }
 }

@@ -32,7 +32,6 @@ const documentsSchema = new mongoose.Schema({
   },
   comments: {
     type: String,
-    required: [true, 'Comments is required'],
   },
 })
 
