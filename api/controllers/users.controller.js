@@ -36,7 +36,12 @@ exports.getAllUserDocuments = async (req, res) => {
     user = await user.populate('documents').execPopulate()
     console.log('All docs populated user: ' + user)
 
-    res.status(200).json(user.documents)
+    const documents = user.documents.map(doc => {
+      doc.data = Buffer.from(doc.data).toString('base64')
+      return doc
+    })
+
+    res.status(200).json(documents)
   } catch (err) {
     handleError(err, res)
   }
