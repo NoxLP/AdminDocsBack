@@ -37,7 +37,9 @@ exports.getAllUserDocuments = async (req, res) => {
     console.log('All docs populated user: ' + user)
 
     const documents = user.documents.map(doc => {
-      doc.data = Buffer.from(doc.data).toString('base64')
+      const base64 = Buffer.from(doc.data).toString('base64')
+      doc = doc.toObject();
+      doc.data = base64
       return doc
     })
 
