@@ -4,6 +4,7 @@ const DocumentsModel = require('../models/document.model')
 const { handleError } = require('../utils')
 
 exports.addDocument = async (req, res) => {
+  console.log(req.body)
   try {
     const { user } = res.locals
     let document = {
@@ -16,6 +17,7 @@ exports.addDocument = async (req, res) => {
     document.category = req.body.category ?? 'Otros'
     document.name = req.body.name ?? req.file.filename
     document.comments = req.body.comments ?? ''
+    console.log(document)
 
     document = await DocumentsModel.create(document)
 
