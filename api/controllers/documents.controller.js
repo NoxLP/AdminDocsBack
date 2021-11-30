@@ -33,16 +33,21 @@ exports.addDocument = async (req, res) => {
 exports.editDocument = async (req, res) => {
   try {
     const document = {
-      data: fs.readFileSync(path.resolve(`uploads/${req.file.filename}`)),
-      contentType: req.file.mimetype,
       date: new Date(Date.now()),
       category: req.body.category ?? 'Otros',
       name: req.body.name ?? req.file.filename,
       comments: req.body.comments ?? '',
     }
+    if (req.file) {
+      document.data = fs.readFileSync(
+        path.resolve(`uploads/${req.file.filename}`)
+      )
+      document.contentType = req.file.mimetype
+    }
+
     console.log(document)
 
-    await DocumentsModel.findByIdAndUpdate(req.params.id, document)
+    await DocumentsModel.updateOne({ _id: req.params.id }, document)
 
     res.status(200).json({ msg: 'Document edited' })
   } catch (err) {
