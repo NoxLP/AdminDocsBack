@@ -34,14 +34,13 @@ exports.getAllUserDocuments = async (req, res) => {
     console.log(res.locals)
     let { user } = res.locals
     user = await user.populate('documents').execPopulate()
-    console.log('All docs populated user: ' + user)
 
-    const documents = user.documents.map(doc => {
+    const documents = user.documents.map((doc) => {
       // Get mongo buffer as base64 image
       const base64 = Buffer.from(doc.data).toString('base64')
       // Then get document as plain object, if done first the previous line fails,
       // if not done, there are problems overwriting data property
-      doc = doc.toObject();
+      doc = doc.toObject()
       // Now change buffer data to base64 data
       doc.data = base64
       return doc
