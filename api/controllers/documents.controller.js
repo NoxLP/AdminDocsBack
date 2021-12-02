@@ -54,3 +54,13 @@ exports.editDocument = async (req, res) => {
     handleError(err, res)
   }
 }
+
+exports.removeDocument = async (req, res) => {
+  try {
+    await DocumentsModel.findByIdAndDelete(req.params.id)
+
+    res.status(200).json({ msg: 'document removed' })
+  } catch (err) {
+    handleError(err, res)
+  }
+}

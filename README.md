@@ -81,7 +81,8 @@ All API endpoints prepended with `/api/`
 
 ### **Documents:**
 
-| METHOD | ENDPOINT       | TOKEN | DESCRIPTION                        | POST PARAMS                                                                      | RETURNS                  |
-| ------ | -------------- | ----- | ---------------------------------- | -------------------------------------------------------------------------------- | ------------------------ |
-| POST   | /documents     | yes   | Add document to authenticated user | `Form data: image, contentType, community, user, date, category, name, comments` | `msg: 'Document added'`  |
-| PUT    | /documents/:id | yes   | Edit document by id                | `Form data: image, contentType, community, user, date, category, name, comments` | `msg: 'Document edited'` |
+| METHOD | ENDPOINT       | TOKEN | DESCRIPTION                        | POST PARAMS                                                                      | RETURNS                   |
+| ------ | -------------- | ----- | ---------------------------------- | -------------------------------------------------------------------------------- | ------------------------- |
+| POST   | /documents     | yes   | Add document to authenticated user | `Form data: image, contentType, community, user, date, category, name, comments` | `msg: 'Document added'`   |
+| PUT    | /documents/:id | yes   | Edit document by id                | `Form data: image, contentType, community, user, date, category, name, comments` | `msg: 'Document edited'`  |
+| DELETE | /documents/:id | yes   | Remove document by id              | `Form data: image, contentType, community, user, date, category, name, comments` | `msg: 'Document removed'` |
