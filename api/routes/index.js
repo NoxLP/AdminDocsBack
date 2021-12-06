@@ -9,7 +9,7 @@ const documentsRouter = require('./documents.router')
 router
   .use('/users', checkToken, usersRouter)
   .use('/auth', authRouter)
-  .use('/communities', checkToken, communitiesRouter)
+  .use('/communities', communitiesRouter)
   .use('/documents', checkToken, documentsRouter)
 
 router.get('/whoami', checkToken, (req, res) => {
