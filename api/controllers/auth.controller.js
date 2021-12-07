@@ -1,5 +1,6 @@
 const UserModel = require('../models/users.model')
 const CommunitiesModel = require('../models/communities.model')
+const FloorsModel = require('../models/floors.model')
 const { compareSync, hashSync } = require('bcrypt')
 const { createToken } = require('../utils/auth')
 const { handleError } = require('../utils/index')
@@ -14,7 +15,13 @@ exports.signUp = async (req, res) => {
       mobile_number: req.body.mobile,
       password: encryptedPwd,
       community: req.body.community,
+      floor: req.body.floor,
     })
+
+    await FloorsModel.updateOne(
+      { _id: req.body.floor },
+      { user: user._id, community: req.body.community }
+    )
 
     return res.status(200).json({ token: createToken(user) })
   } catch (err) {

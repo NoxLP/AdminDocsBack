@@ -1,6 +1,7 @@
 const DocumentsModel = require('../models/document.model')
 const CommunitiesModel = require('../models/communities.model')
 const FloorsModel = require('../models/floors.model')
+const UsersModel = require('../models/users.model')
 const { handleError } = require('../utils')
 
 exports.getMyCommunityDocuments = async (req, res) => {
@@ -17,15 +18,33 @@ exports.getMyCommunityDocuments = async (req, res) => {
 
 exports.getUserRegisterCommunitiesDTOs = async (req, res) => {
   try {
-    let communities = await CommunitiesModel.find().populate('floors', 'name')
+    const allCommunities = await CommunitiesModel.find()
+      .populate('floors')
+      .lean()
 
-    res.status(200).json(
-      communities.map((comm) => ({
-        id: comm._id,
-        name: comm.name,
-        floors: comm.floors,
-      }))
-    )
+    //Return only empty floors
+    const communities = allCommunities.reduce((acc, current, idx) => {
+      const floors = current.floors
+        .filter((floor) => !floor.user)
+        .map((floor) => {
+          return {
+            id: floor._id,
+            name: floor.name,
+          }
+        })
+
+      if (floors.length > 0) {
+        acc.push({
+          id: current._id,
+          name: current.name,
+          floors: floors,
+        })
+      }
+
+      return acc
+    }, [])
+
+    res.status(200).json(communities)
   } catch (err) {
     handleError(err, res)
   }

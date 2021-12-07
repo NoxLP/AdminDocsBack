@@ -2,7 +2,7 @@
 
 REST API for Admin docs app written in Javascript, Node.js, Express.
 
-Updated at 16/10/21
+Updated at 07/12/21
 
 ## Data Model
 
@@ -30,6 +30,16 @@ Updated at 16/10/21
 
 ---
 
+### **Floors model:**
+
+| Field     | Type     | Required | Validation | Default | Description           |
+| --------- | -------- | -------- | ---------- | ------- | --------------------- |
+| name      | string   | yes      | -          | -       | Floor name(f.i.: 1ºA) |
+| community | ObjectId | yes      | -          | -       | User community Id     |
+| user      | ObjectId | yes      | -          | -       | User Id               |
+
+---
+
 ### **Document model:**
 
 | Field       | Type     | Required | Validation | Default | Description                                                     |
@@ -52,11 +62,11 @@ All API endpoints prepended with `/api/`
 
 ### **Auth:**
 
-| METHOD | ENDPOINT     | TOKEN | DESCRIPTION | POST PARAMS                                | RETURNS                                                                          |
-| ------ | ------------ | ----- | ----------- | ------------------------------------------ | -------------------------------------------------------------------------------- |
-| POST   | /auth/signup | -     | User signup | `name, email, password, community, mobile` | `token; user profile: mobile_number, community, email, name, id`                 |
-| POST   | /auth/login  | -     | User signup | `mobile, password`                         | `token; user profile: mobile_number, community, email, name, id`                 |
-| GET    | /auth/check  | yes   | Token check | -                                          | `msg: 'Token is valid'; user profile: mobile_number, community, email, name, id` |
+| METHOD | ENDPOINT     | TOKEN | DESCRIPTION | POST PARAMS                                       | RETURNS                                                                                 |
+| ------ | ------------ | ----- | ----------- | ------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| POST   | /auth/signup | -     | User signup | `name, email, password, community, mobile, floor` | `token; user profile: mobile_number, community, email, name, id, floor`                 |
+| POST   | /auth/login  | -     | User signup | `mobile, password`                                | `token; user profile: mobile_number, community, email, name, id, floor`                 |
+| GET    | /auth/check  | yes   | Token check | -                                                 | `msg: 'Token is valid'; user profile: mobile_number, community, email, name, id, floor` |
 
 ---
 
