@@ -10,14 +10,15 @@ Updated at 07/12/21
 
 ### **User Model:**
 
-| Field         | Type     | Required | Validation  | Default | Description                      |
-| ------------- | -------- | -------- | ----------- | ------- | -------------------------------- |
-| name          | string   | yes      | -           | -       | User name                        |
-| email         | string   | yes      | email       | -       | User email                       |
-| mobile_number | string   | yes      | 8-12 digits | -       | User mobile number               |
-| password      | string   | yes      | -           | -       | Password (encrypted)             |
-| community     | ObjectId | yes      | -           | -       | User community Id                |
-| documents     | Array    | yes      | -           | -       | ObjectId: Array - ref: Documents |
+| Field         | Type     | Required    | Validation  | Default | Description                      |
+| ------------- | -------- | ----------- | ----------- | ------- | -------------------------------- |
+| name          | string   | yes         | -           | -       | User name                        |
+| email         | string   | yes(unique) | email       | -       | User email                       |
+| mobile_number | string   | yes(unique) | 8-12 digits | -       | User mobile number               |
+| password      | string   | yes         | -           | -       | Password (encrypted)             |
+| community     | ObjectId | yes         | -           | -       | User community Id                |
+| documents     | Array    | yes         | -           | -       | ObjectId: Array - ref: Documents |
+| floor         | ObjectId | yes(unique) | -           | -       | User floor Id                    |
 
 ---
 
@@ -44,7 +45,6 @@ Updated at 07/12/21
 
 | Field       | Type     | Required | Validation | Default | Description                                                     |
 | ----------- | -------- | -------- | ---------- | ------- | --------------------------------------------------------------- |
-| data        |
 | data        | Buffer   | yes      | -          | -       | Document file data                                              |
 | contentType | string   | yes      | -          | -       | Document file mime type                                         |
 | community   | ObjectId | yes      | -          | -       | User community Id                                               |

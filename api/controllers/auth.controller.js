@@ -9,6 +9,11 @@ exports.signUp = async (req, res) => {
   try {
     const encryptedPwd = hashSync(req.body.password, 10)
 
+    const community = await CommunitiesModel.findById(req.body.community)
+    if (!community.floors.some((floor) => floor._id == req.body.floor)) {
+      throw 'Wrong floor for given community'
+    }
+
     const user = await UserModel.create({
       name: req.body.name,
       email: req.body.email,

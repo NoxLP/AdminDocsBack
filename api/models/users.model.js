@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema({
         )
       },
     },
-    unique: [true, 'This is email is registered'],
+    unique: [true, 'This email is registered'],
   },
   mobile_number: {
     type: String,
@@ -25,6 +25,7 @@ const userSchema = new mongoose.Schema({
         return /^\d{8,12}$/.test(value)
       },
     },
+    unique: [true, 'This mobile number is registered'],
   },
   password: {
     type: String,
@@ -44,6 +45,7 @@ const userSchema = new mongoose.Schema({
   floor: {
     type: mongoose.Types.ObjectId,
     required: [true, 'Floor is required'],
+    unique: [true, 'This floor is registered'],
     ref: 'floors',
   },
 })

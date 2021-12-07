@@ -20,7 +20,7 @@ exports.deleteUserById = async (req, res) => {
     const user = await UserModel.findById(req.params.id).lean()
     await UserModel.remove({ _id: req.params.id })
 
-    await FloorsModel.updateOne({ _id: req.params.id }, { user: null })
+    await FloorsModel.updateOne({ _id: req.params.id }, { $unset: { user: 1 } })
 
     return res.status(200).json(response)
   } catch (err) {
