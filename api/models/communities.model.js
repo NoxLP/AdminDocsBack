@@ -7,8 +7,15 @@ const communitiesSchema = new mongoose.Schema({
   },
   address: {
     type: String,
-    required: [true, 'Name is required'],
+    required: [true, 'Address is required'],
   },
+  floors: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: 'floors',
+      required: [true, 'Floors are required'],
+    },
+  ],
 })
 
 const communitiesModel = mongoose.model('communities', communitiesSchema)

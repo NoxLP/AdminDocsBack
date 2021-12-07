@@ -32,7 +32,7 @@ exports.login = async (req, res, next) => {
     if (user && compareSync(req.body.password, user.password)) {
       return res.status(200).json({
         token: createToken(user),
-        user: user.getProfile(),
+        user: await user.getProfile(),
       })
     }
 
@@ -44,10 +44,9 @@ exports.login = async (req, res, next) => {
 
 exports.check = async (req, res, next) => {
   const { user } = res.locals
-  console.log(user)
 
   res.status(200).json({
     msg: 'Token is Valid',
-    user: user.getProfile(),
+    user: await user.getProfile(),
   })
 }

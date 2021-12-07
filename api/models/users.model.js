@@ -33,6 +33,7 @@ const userSchema = new mongoose.Schema({
   community: {
     type: mongoose.Types.ObjectId,
     required: [true, 'Community is required'],
+    ref: 'communities',
   },
   documents: [
     {
@@ -40,16 +41,23 @@ const userSchema = new mongoose.Schema({
       ref: 'documents',
     },
   ],
+  floor: {
+    type: mongoose.Types.ObjectId,
+    required: [true, 'Floor is required'],
+    ref: 'floors',
+  },
 })
 
-userSchema.methods.getProfile = function () {
-  const user = this
+userSchema.methods.getProfile = async function () {
+  const user = await this.populate('floor', 'name').execPopulate()
+
   return {
     mobile_number: user.mobile_number,
     community: user.community,
     email: user.email,
     name: user.name,
     id: user._id,
+    floor: user.floor,
   }
 }
 
