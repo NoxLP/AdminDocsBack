@@ -1,4 +1,5 @@
 const UserModel = require('../models/users.model')
+const FloorsModel = require('../models/floors.model')
 const { handleError } = require('../utils')
 
 // TODO: Not used? Needs separated auth flow? Review this
@@ -14,10 +15,17 @@ exports.getUserById = (req, res) => {
     .catch((err) => handleError(err, res))
 }
 
-exports.deleteUserById = (req, res) => {
-  UserModel.remove({ _id: req.params.id })
-    .then((response) => res.json(response))
-    .catch((err) => handleError(err, res))
+exports.deleteUserById = async (req, res) => {
+  try {
+    const user = await UserModel.findById(req.params.id).lean()
+    await UserModel.remove({ _id: req.params.id })
+
+    await FloorsModel.updateOne({ _id: req.params.id }, { user: null })
+
+    return res.status(200).json(response)
+  } catch (err) {
+    handleError(err, res)
+  }
 }
 
 exports.updateUser = (req, res) => {
