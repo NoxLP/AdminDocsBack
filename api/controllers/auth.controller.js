@@ -28,7 +28,10 @@ exports.signUp = async (req, res) => {
       { user: user._id, community: req.body.community }
     )
 
-    return res.status(200).json({ token: createToken(user) })
+    return res.status(200).json({
+      token: createToken(user),
+      user: await user.getProfile(),
+    })
   } catch (err) {
     if (err.code === 11000) return handleError('User already in use', res, 400)
 
