@@ -14,14 +14,16 @@ exports.signUp = async (req, res) => {
       throw 'Wrong floor for given community'
     }
 
-    const user = await UserModel.create({
+    const bodyUser = {
       name: req.body.name,
       email: req.body.email,
-      mobile_number: req.body.mobile,
+      mobile_number: req.body.mobile_number,
       password: encryptedPwd,
       community: req.body.community,
       floor: req.body.floor,
-    })
+    }
+    console.log(bodyUser)
+    const user = await UserModel.create(bodyUser)
 
     await FloorsModel.updateOne(
       { _id: req.body.floor },
