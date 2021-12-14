@@ -7,8 +7,19 @@ const { handleError } = require('../utils')
 exports.getMyCommunityDocuments = async (req, res) => {
   try {
     const { user } = res.locals
-    const documents = await DocumentsModel.find({ community: user.community })
+    let documents = await DocumentsModel.find({ community: user.community })
     console.log('All community odcs: ' + documents)
+
+    documents = documents.map((doc) => {
+      // Get mongo buffer as base64 image
+      const base64 = Buffer.from(doc.data).toString('base64')
+      // Then get document as plain object, if done first the previous line fails,
+      // if not done, there are problems overwriting data property
+      doc = doc.toObject()
+      // Now change buffer data to base64 data
+      doc.data = base64
+      return doc
+    })
 
     res.status(200).json(documents)
   } catch (err) {
