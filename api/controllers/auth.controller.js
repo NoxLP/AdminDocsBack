@@ -94,6 +94,23 @@ exports.recoverPassSetUserData = async (req, res) => {
   }
 }
 
-exports.recoverPassCheckCode = async (req, res) => {}
+exports.recoverPassCheckCode = async (req, res) => {
+  try {
+    const user = findUserByEmailOrMobile(req)
+    if (
+      user &&
+      user.recover_pass_code &&
+      compareSync(req.body.code, user.recover_pass_code)
+    ) {
+      user.recover_pass_code = null
+
+      return res.status(200).json({ msg: 'Rec pass code ok' })
+    }
+
+    return res.status(400).json({ msg: 'Wrong code or user' })
+  } catch (err) {
+    return handleError(err, res)
+  }
+}
 
 exports.recoverPassSetNewPassword = async (req, res) => {}
