@@ -50,7 +50,6 @@ const userSchema = new mongoose.Schema({
   },
   recover_pass_code: {
     type: string,
-    unique: [true, 'Recover pass code must be unique'],
   },
 })
 
