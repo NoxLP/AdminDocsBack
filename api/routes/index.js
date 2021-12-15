@@ -12,11 +12,12 @@ router
   .use('/communities', communitiesRouter)
   .use('/documents', checkToken, documentsRouter)
 
-router.get('/whoami', checkToken, (req, res) => {
-  res.send(`hi there! ${res.locals.user.name}`)
-})
-router.get('/status', (req, res) => {
-  res.send("I'm here and OK!")
-})
+router
+  .get('/whoami', checkToken, (req, res) => {
+    res.send(`hi there! ${res.locals.user.name}`)
+  })
+  .get('/status', (req, res) => {
+    res.send("I'm here and OK!")
+  })
 
 module.exports = router

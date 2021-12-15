@@ -6,7 +6,8 @@ const {
   getUserRegisterCommunitiesDTOs,
 } = require('../controllers/communities.controller')
 
-router.get('/docs', checkToken, getMyCommunityDocuments)
-router.get('/register-dtos', getUserRegisterCommunitiesDTOs)
+router
+  .get('/docs', checkToken, getMyCommunityDocuments)
+  .get('/register-dtos', getUserRegisterCommunitiesDTOs)
 
 module.exports = router
