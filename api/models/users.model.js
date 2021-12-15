@@ -48,6 +48,10 @@ const userSchema = new mongoose.Schema({
     unique: [true, 'This floor is registered'],
     ref: 'floors',
   },
+  recover_pass_code: {
+    type: string,
+    unique: [true, 'Recover pass code must be unique'],
+  },
 })
 
 userSchema.methods.getProfile = async function () {

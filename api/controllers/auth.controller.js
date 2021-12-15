@@ -4,6 +4,7 @@ const FloorsModel = require('../models/floors.model')
 const { compareSync, hashSync } = require('bcrypt')
 const { createToken } = require('../utils/auth')
 const { handleError } = require('../utils/index')
+const { sendRecoverPassCodeEmail } = require('../utils/nodemailer')
 
 exports.signUp = async (req, res) => {
   try {
@@ -68,7 +69,30 @@ exports.check = async (req, res) => {
   })
 }
 
-exports.recoverPassSetUserData = async (req, res) => {}
+const findUserByEmailOrMobile = async (req) => {
+  let user = undefined
+  if (req.body.email) {
+    user = await UserModel.find({ email: req.body.email })
+  } else if (req.body.mobile_number) {
+    user = await UserModel.find({ mobile_number: req.body.mobile_number })
+  }
+  return user
+}
+exports.recoverPassSetUserData = async (req, res) => {
+  try {
+    const user = findUserByEmailOrMobile(req)
+
+    if (!user) return res.status(400).json({ msg: 'No user found' })
+
+    const sentCode = await sendRecoverPassCodeEmail(user)
+    user.recover_pass_code = hashSync(sentCode, 10)
+    user.save()
+
+    return res.status(200).json({ msg: 'Code sent and saved' })
+  } catch (err) {
+    return handleError(err, res)
+  }
+}
 
 exports.recoverPassCheckCode = async (req, res) => {}
 

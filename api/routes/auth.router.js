@@ -12,7 +12,7 @@ const {
 router.get('/check', checkToken, check)
 
 router
-  .post('/signup', signUp) //body => {name, email, password}
+  .post('/signup', signUp)
   .post('/login', login)
   .post('/recover-pass-data', recoverPassSetUserData)
   .post('/recover-pass-code', recoverPassCheckCode)
