@@ -24,10 +24,11 @@ Updated at 07/12/21
 
 ### **Communities model:**
 
-| Field   | Type   | Required | Validation | Default | Description       |
-| ------- | ------ | -------- | ---------- | ------- | ----------------- |
-| name    | string | yes      | -          | -       | Community name    |
-| address | string | yes      | -          | -       | Community address |
+| Field   | Type   | Required | Validation | Default | Description                                      |
+| ------- | ------ | -------- | ---------- | ------- | ------------------------------------------------ |
+| name    | string | yes      | -          | -       | Community name                                   |
+| address | string | yes      | -          | -       | Community address                                |
+| floors  | Array  | yes      | -          | -       | Community floors - ObjectId: Array - ref: Floors |
 
 ---
 
@@ -83,9 +84,10 @@ All API endpoints prepended with `/api/`
 
 ### **Communities:**
 
-| METHOD | ENDPOINT          | TOKEN | DESCRIPTION                                         | POST PARAMS | RETURNS            |
-| ------ | ----------------- | ----- | --------------------------------------------------- | ----------- | ------------------ |
-| GET    | /communities/docs | yes   | Get all documents of authenticated user's community | -           | Array of documents |
+| METHOD | ENDPOINT                   | TOKEN | DESCRIPTION                                         | POST PARAMS | RETURNS                   |
+| ------ | -------------------------- | ----- | --------------------------------------------------- | ----------- | ------------------------- |
+| GET    | /communities/docs          | yes   | Get all documents of authenticated user's community | -           | Array of documents        |
+| GET    | /communities/register-dtos | no    | Get communities DTOs for signup screen              | -           | Array of communities DTOs |
 
 ---
 
