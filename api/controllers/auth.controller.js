@@ -41,7 +41,7 @@ exports.signUp = async (req, res) => {
   }
 }
 
-exports.login = async (req, res, next) => {
+exports.login = async (req, res) => {
   try {
     const user = await UserModel.findOne({ mobile_number: req.body.mobile })
     if (!user) return handleError(400, 'wrong phone number', res)
@@ -59,7 +59,7 @@ exports.login = async (req, res, next) => {
   }
 }
 
-exports.check = async (req, res, next) => {
+exports.check = async (req, res) => {
   const { user } = res.locals
 
   res.status(200).json({
@@ -67,3 +67,9 @@ exports.check = async (req, res, next) => {
     user: await user.getProfile(),
   })
 }
+
+exports.recoverPassSetUserData = async (req, res) => {}
+
+exports.recoverPassCheckCode = async (req, res) => {}
+
+exports.recoverPassSetNewPassword = async (req, res) => {}
