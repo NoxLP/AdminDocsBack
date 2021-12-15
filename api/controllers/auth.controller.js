@@ -80,13 +80,13 @@ const findUserByEmailOrMobile = async (req) => {
 }
 exports.recoverPassSetUserData = async (req, res) => {
   try {
-    const user = findUserByEmailOrMobile(req)
+    const user = await findUserByEmailOrMobile(req)
 
     if (!user) return res.status(400).json({ msg: 'No user found' })
 
     const sentCode = await sendRecoverPassCodeEmail(user)
     user.recover_pass_code = hashSync(sentCode, 10)
-    user.save()
+    await user.save()
 
     return res.status(200).json({ msg: 'Code sent and saved' })
   } catch (err) {
@@ -96,7 +96,7 @@ exports.recoverPassSetUserData = async (req, res) => {
 
 exports.recoverPassCheckCode = async (req, res) => {
   try {
-    const user = findUserByEmailOrMobile(req)
+    const user = await findUserByEmailOrMobile(req)
     if (
       user &&
       user.recover_pass_code &&
@@ -113,4 +113,18 @@ exports.recoverPassCheckCode = async (req, res) => {
   }
 }
 
-exports.recoverPassSetNewPassword = async (req, res) => {}
+exports.recoverPassSetNewPassword = async (req, res) => {
+  try {
+    const user = await findUserByEmailOrMobile(req)
+    const encryptedPwd = hashSync(req.body.password, 10)
+    user.password = encryptedPwd
+    await user.save()
+
+    return res.status(200).json({
+      token: createToken(user),
+      user: await user.getProfile(),
+    })
+  } catch (err) {
+    return handleError(err, res)
+  }
+}
