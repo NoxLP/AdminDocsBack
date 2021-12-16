@@ -49,7 +49,7 @@ const userSchema = new mongoose.Schema({
     ref: 'floors',
   },
   recover_pass_code: {
-    type: string,
+    type: String,
   },
 })
 

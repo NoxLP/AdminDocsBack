@@ -10,6 +10,10 @@ const getRandomAlphanumericCode = (codeLength = 5) => {
 }
 
 const sendMailAsync = async (to, subject, htmlBody) => {
+  console.log('>>> send mail')
+  console.log(to)
+  console.log(subject)
+  console.log(htmlBody)
   return new Promise((resolve, reject) => {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
@@ -44,16 +48,22 @@ const sendMailAsync = async (to, subject, htmlBody) => {
 const buildRecoveryPassEmailBody = (user, code) => {
   return `El usuario ${user.name} ha solicitado recuperar su contraseña de la app  de <i>AdminDocs</i>.
 <br>
+<br>
 Para seguir con el proceso debe introducir el siguiente código en la app:
 <br>
-${code}
+<br>
+<b>${code}</b>
+<br>
 <br>
 Si no ha solicitado recuperar su contraseña, ignore este email.
-
+<br>
+<br>
 <b><i>AdminDocs</i></b>`
 }
 
 exports.sendRecoverPassCodeEmail = async (user) => {
+  console.log('>>> sendRecoverPassCodeEmail')
+  console.log(user)
   try {
     const code = getRandomAlphanumericCode(5)
     const body = buildRecoveryPassEmailBody(user, code)

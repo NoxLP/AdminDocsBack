@@ -70,18 +70,25 @@ exports.check = async (req, res) => {
 }
 
 const findUserByEmailOrMobile = async (req) => {
+  console.log('>>> findUserByEmailOrMobile')
+  console.log(req.body)
   let user = undefined
   if (req.body.email) {
-    user = await UserModel.find({ email: req.body.email })
+    user = (await UserModel.find({ email: req.body.email }))[0]
+    console.log('>>> findUserByEmailOrMobile 2')
+    console.log(user)
   } else if (req.body.mobile_number) {
-    user = await UserModel.find({ mobile_number: req.body.mobile_number })
+    user = (await UserModel.find({ mobile_number: req.body.mobile_number }))[0]
+    console.log('>>> findUserByEmailOrMobile 2')
+    console.log(user)
   }
   return user
 }
 exports.recoverPassSetUserData = async (req, res) => {
   try {
     const user = await findUserByEmailOrMobile(req)
-
+    console.log('>>> recoverPassSetUserData')
+    console.log(user)
     if (!user) return res.status(400).json({ msg: 'No user found' })
 
     const sentCode = await sendRecoverPassCodeEmail(user)
@@ -103,6 +110,7 @@ exports.recoverPassCheckCode = async (req, res) => {
       compareSync(req.body.code, user.recover_pass_code)
     ) {
       user.recover_pass_code = null
+      await user.save()
 
       return res.status(200).json({ msg: 'Rec pass code ok' })
     }
